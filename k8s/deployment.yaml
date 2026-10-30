@@ -1,0 +1,125 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wiseq-hermes
+  namespace: wiseq-production
+  labels:
+    app: wiseq-hermes
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: wiseq-hermes
+  template:
+    metadata:
+      labels:
+        app: wiseq-hermes
+    spec:
+      containers:
+      - name: wiseq-hermes
+        image: wiseq-hermes-integration:latest
+        ports:
+        - containerPort: 8000
+        env:
+        - name: WQ_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: wiseq-secrets
+              key: wq-api-key
+        - name: HERMES_DASHBOARD_URL
+          valueFrom:
+            configMapKeyRef:
+              name: wiseq-config
+              key: hermes-dashboard-url
+        - name: LOG_LEVEL
+          value: "INFO"
+        resources:
+          requests:
+            memory: "1Gi"
+            cpu: "500m"
+          limits:
+            memory: "2Gi"
+            cpu: "1000m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8000
+          initialDelaySeconds: 5
+          periodSeconds: 5
+      imagePullSecrets:
+      - name: docker-registry-secret
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: wiseq-hermes-service
+  namespace: wiseq-production
+spec:
+  selector:
+    app: wiseq-hermes
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8000
+  type: LoadBalancer
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: wiseq-hermes-ingress
+  namespace: wiseq-production
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/rate-limit: "100"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  tls:
+  - hosts:
+    - wiseq-hermes.example.com
+    secretName: wiseq-hermes-tls
+  rules:
+  - host: wiseq-hermes.example.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: wiseq-hermes-service
+            port:
+              number: 80
+
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: wiseq-hermes-hpa
+  namespace: wiseq-production
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: wiseq-hermes
+  minReplicas: 3
+  maxReplicas: 15
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 80

@@ -1,0 +1,133 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: wiseq-production
+  labels:
+    name: wiseq-production
+
+---
+# Secret for Wise Q API Key
+apiVersion: v1
+kind: Secret
+metadata:
+  name: wiseq-secrets
+  namespace: wiseq-production
+type: Opaque
+data:
+  wq-api-key: eW91cl93aXNlZXFfa2V5X2hlcmU=  # Base64 encoded "your_wiseq_api_key_here"
+
+---
+# ConfigMap for configuration
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: wiseq-config
+  namespace: wiseq-production
+data:
+  hermes-dashboard-url: https://dashboard.hermes.ai
+  log-level: INFO
+  max-retries: "3"
+  backoff-factor: "2"
+  timeout: "30"
+
+---
+# ServiceAccount
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: wiseq-serviceaccount
+  namespace: wiseq-production
+
+---
+# Role for Wise Q Hermes
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: wiseq-role
+  namespace: wiseq-production
+rules:
+- apiGroups: [""]
+  resources: ["pods", "services", "configmaps", "secrets"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+- apiGroups: [""]
+  resources: ["pods/log"]
+  verbs: ["get", "list"]
+- apiGroups: ["apps"]
+  resources: ["deployments"]
+  verbs: ["get", "list", "watch"]
+
+---
+# RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: wiseq-rolebinding
+  namespace: wiseq-production
+subjects:
+- kind: ServiceAccount
+  name: wiseq-serviceaccount
+  namespace: wiseq-production
+roleRef:
+  kind: Role
+  name: wiseq-role
+  apiGroup: rbac.authorization.k8s.io
+
+---
+# PersistentVolumeClaim for database
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-pvc
+  namespace: wiseq-production
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: standard
+
+---
+# PersistentVolumeClaim for Redis
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: redis-pvc
+  namespace: wiseq-production
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+  storageClassName: standard
+
+---
+# PersistentVolumeClaim for logs
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: logs-pvc
+  namespace: wiseq-production
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: standard
+
+---
+# PersistentVolumeClaim for backups
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: backups-pvc
+  namespace: wiseq-production
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
+  storageClassName: standard
