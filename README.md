@@ -1,3 +1,29 @@
+> # ⚠️ DEPRECATED — this repository is not the source of truth
+>
+> **This repository is DEPRECATED and is no longer the source of truth for the WiseQ integration. It was never a working deployment. Do not copy, deploy, or cite anything in it.**
+>
+> It was archived on **2026-11-02**. The repository was kept (archived, not deleted) so that old links still resolve and explain themselves.
+>
+> **Why it is deprecated:**
+>
+> - **It never worked.** The CI/CD workflow (`.github/workflows/ci-cd.yml`), the nginx config (`nginx/nginx.conf`), the database seed (`init.sql`) and the Grafana provisioning (`monitoring/grafana/provisioning`) that this repository documents and mounts **were never present in it** — there is no `.github/` directory, and `docker compose up` cannot start. Its quickstart clones `github.com/aiw-org/wiseq-hermes-integration`, which is a **404**.
+> - **Its endpoints do not exist.** `https://api.wiseq.nl` and `https://dashboard.hermes.ai` **do not resolve** (NXDOMAIN).
+> - **Its content is fabricated.** The pricing tiers, market figures, model-routing table and "99.9% uptime / <100ms / 40% cost savings" statistics are invented. The pricing ladder in particular contradicts the real WiseQ business rules.
+>
+> **Where the real work lives:**
+>
+> | What | Where |
+> |---|---|
+> | The real implementation (executable, tested, Docker-verified) | **[`Ai-Whisperers/wiseq-hermes`](https://github.com/Ai-Whisperers/wiseq-hermes)** |
+> | The consolidated public repo — implementation under `ops/` as of 2026-11 | **[`Ai-Whisperers/wiseq-ai-onboarding`](https://github.com/Ai-Whisperers/wiseq-ai-onboarding)** (consolidation PR [#1](https://github.com/Ai-Whisperers/wiseq-ai-onboarding/pull/1)) |
+> | The private client corpus | **`Ai-Whisperers/sessions`** (private) |
+>
+> **Nothing was imported from this repository.** A file-by-file comparison against the authoritative repositories found **no unique content** — every file here is either a duplicate of functionality that already exists and works in `Ai-Whisperers/wiseq-hermes`, or it documents infrastructure that never existed. The full per-file inventory and classification are in **[`DEPRECATED.md`](DEPRECATED.md)**.
+>
+> The rest of this README is the original text, kept for the historical record only. **It is not documentation.**
+
+---
+
 # Wise Q Hermes Integration
 
 > Complete integration of Wise Q educational audio technology with Hermes AI
