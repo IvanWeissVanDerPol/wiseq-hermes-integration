@@ -2,7 +2,7 @@
 >
 > **This repository is DEPRECATED and is no longer the source of truth for the WiseQ integration. It was never a working deployment. Do not copy, deploy, or cite anything in it.**
 >
-> It was archived on **2026-11-02**. The repository was kept (archived, not deleted) so that old links still resolve and explain themselves.
+> It was deprecated on **2026-11-02** and archived on GitHub on **2026-11-03 (UTC)**. The repository was kept (archived, not deleted) so that old links still resolve and explain themselves.
 >
 > **Why it is deprecated:**
 >
@@ -15,7 +15,7 @@
 > | What | Where |
 > |---|---|
 > | The real implementation (executable, tested, Docker-verified) | **[`Ai-Whisperers/wiseq-hermes`](https://github.com/Ai-Whisperers/wiseq-hermes)** |
-> | The consolidated public repo — implementation under `ops/` as of 2026-11 | **[`Ai-Whisperers/wiseq-ai-onboarding`](https://github.com/Ai-Whisperers/wiseq-ai-onboarding)** (consolidation PR [#1](https://github.com/Ai-Whisperers/wiseq-ai-onboarding/pull/1)) |
+> | The consolidated public repo | **[`Ai-Whisperers/wiseq-ai-onboarding`](https://github.com/Ai-Whisperers/wiseq-ai-onboarding)** — as of 2026-11 the WiseQ implementation is consolidated here under `ops/`, via open consolidation PR [#1](https://github.com/Ai-Whisperers/wiseq-ai-onboarding/pull/1) (branch `consolidate/ops-into-main-repo`; `ops/` is not yet on `main`) |
 > | The private client corpus | **`Ai-Whisperers/sessions`** (private) |
 >
 > **Nothing was imported from this repository.** A file-by-file comparison against the authoritative repositories found **no unique content** — every file here is either a duplicate of functionality that already exists and works in `Ai-Whisperers/wiseq-hermes`, or it documents infrastructure that never existed. The full per-file inventory and classification are in **[`DEPRECATED.md`](DEPRECATED.md)**.

@@ -1,6 +1,6 @@
 # DEPRECATED — `IvanWeissVanDerPol/wiseq-hermes-integration`
 
-**Deprecated and archived on 2026-11-02.** This repository is no longer the source of truth for the WiseQ work, and it was never a working deployment.
+**Deprecated on 2026-11-02; archived on GitHub on 2026-11-03 (UTC).** This repository is no longer the source of truth for the WiseQ work, and it was never a working deployment.
 
 Nothing in this repository should be copied, deployed, or cited. This file is the permanent record of *why*, and of the file-by-file classification that was made before the repository was archived.
 
@@ -27,7 +27,7 @@ Nothing in this repository should be copied, deployed, or cited. This file is th
 | What | Where |
 |---|---|
 | The WiseQ implementation (executable, tested, Docker-verified) | **[`Ai-Whisperers/wiseq-hermes`](https://github.com/Ai-Whisperers/wiseq-hermes)** — the operational and code home |
-| The consolidated public repo | **[`Ai-Whisperers/wiseq-ai-onboarding`](https://github.com/Ai-Whisperers/wiseq-ai-onboarding)** — as of 2026-11 the implementation is consolidated here under `ops/` (PR [#1](https://github.com/Ai-Whisperers/wiseq-ai-onboarding/pull/1)) |
+| The consolidated public repo | **[`Ai-Whisperers/wiseq-ai-onboarding`](https://github.com/Ai-Whisperers/wiseq-ai-onboarding)** — as of 2026-11 the implementation is consolidated here under `ops/`, via open consolidation PR [#1](https://github.com/Ai-Whisperers/wiseq-ai-onboarding/pull/1) (branch `consolidate/ops-into-main-repo`; `ops/` is not yet on `main`) |
 | The private client corpus | **`Ai-Whisperers/sessions`** (private) — raw corpus, digests and internal analysis |
 
 **Nothing was imported from this repository.** A file-by-file comparison against the authoritative repositories found **no unique content**: every file here is either a duplicate of functionality that already exists — and works — in `Ai-Whisperers/wiseq-hermes`, or it documents and configures infrastructure that never existed. See the classification table in §4.
@@ -118,5 +118,5 @@ The content is not lost: this repository is archived rather than deleted, so all
 ## 6. Related
 
 - Migration plan: §G step 8 and §B5 of `09-repository-map.md` in the private `Ai-Whisperers/sessions` corpus.
-- Consolidated public repo: `Ai-Whisperers/wiseq-ai-onboarding` — implementation under `ops/` (PR #1).
+- Consolidated public repo: `Ai-Whisperers/wiseq-ai-onboarding` — implementation under `ops/`, via open consolidation PR #1 (branch `consolidate/ops-into-main-repo`).
 - Authoritative implementation: `Ai-Whisperers/wiseq-hermes`.
